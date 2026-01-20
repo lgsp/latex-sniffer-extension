@@ -1,16 +1,10 @@
-{
-  "manifest_version": 3,
-  "name": "Quick LaTeX Sniffer",
-  "version": "1.1",
-  "description": "Scans the page for LaTeX patterns.",
-  "permissions": ["activeTab"],
-  "action": {
-    "default_popup": "popup.html"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
-    }
-  ]
-}
+// This script runs automatically on every page
+const findAndHighlightLatex = () => {
+  const regex = /\$([^$]+)\$/g; // Matches anything between two $ signs
+  document.body.innerHTML = document.body.innerHTML.replace(regex, (match) => {
+    return `<span style="background-color: yellow; border: 1px solid orange;">${match}</span>`;
+  });
+};
+
+// Run it when the page finishes loading
+window.addEventListener('load', findAndHighlightLatex);
